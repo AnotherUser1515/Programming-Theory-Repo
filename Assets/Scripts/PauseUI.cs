@@ -8,9 +8,28 @@ using UnityEditor;
 
 public class PauseUI : MonoBehaviour
 {
+    public GameObject pauseMenu;
     public Button backButton;
     public Button quitButton;
+    public Button optionsMenuButton;
+    public GameObject trueOptions;
+    private Camera mainCamera;
+    public float zoomFov;
+    public Text fovText;
+
     private bool isGameActive = false;
+
+    private void Start()
+    {
+        mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
+    }
+
+    private void Update()
+    {
+        mainCamera.fieldOfView = zoomFov;
+        fovText.text = "FOV: " + zoomFov;
+    }
+
     public void PauseMenu()
     {
         if (isGameActive)
@@ -27,8 +46,8 @@ public class PauseUI : MonoBehaviour
     {
         isGameActive = false;
         Time.timeScale = 0;
-        backButton.gameObject.SetActive(true);
-        quitButton.gameObject.SetActive(true);
+        pauseMenu.gameObject.SetActive(true);
+        trueOptions.gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
     }
 
@@ -36,8 +55,7 @@ public class PauseUI : MonoBehaviour
     {
         isGameActive = true;
         Time.timeScale = 1;
-        backButton.gameObject.SetActive(false);
-        quitButton.gameObject.SetActive(false);
+        pauseMenu.gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -48,5 +66,26 @@ public class PauseUI : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public void OptionsUI()
+    {
+        quitButton.gameObject.SetActive(false);
+        optionsMenuButton.gameObject.SetActive(false);
+        backButton.gameObject.SetActive(false);
+        trueOptions.gameObject.SetActive(true);
+    }
+
+    public void BackOptionsUI()
+    {
+        quitButton.gameObject.SetActive(true);
+        optionsMenuButton.gameObject.SetActive(true);
+        backButton.gameObject.SetActive(true);
+        trueOptions.gameObject.SetActive(false);
+    }
+
+    public void FOVSlider(float zoom)
+    {
+        zoomFov = zoom;
     }
 }
