@@ -22,7 +22,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
+<<<<<<< Updated upstream
             gameManager.PauseMenu();
+=======
+            pauseUI.PauseMenu(); // ABSTRACTION
+>>>>>>> Stashed changes
         }
         Boundaries();
         Click();
@@ -33,7 +37,7 @@ public class PlayerController : MonoBehaviour
         BasicMovement();
     }
 
-    void BasicMovement()
+   private void BasicMovement()
     {
         // WASD movement
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
